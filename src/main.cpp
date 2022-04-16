@@ -1,36 +1,14 @@
 #include <Arduino.h>
 #include <WiFiNINA.h>
+#include <env.h>
 
-char ssid[] = "";                 // your network SSID (name) between the " "
-char pass[] = "";                 // your network password between the " "
-int keyIndex = 0;                 // your network key Index number (needed only for WEP)
-int status = WL_IDLE_STATUS;      // connection status
-WiFiServer server(80);            // server socket
+int keyIndex = 0;                           // your network key Index number (needed only for WEP)
+int status = WL_IDLE_STATUS;                //connection status
+WiFiServer server(80);                      //server socket
 
 WiFiClient client = server.available();
 
 int ledPin = 2;
-
-void setup() {
-  Serial.begin(9600);
-  pinMode(ledPin, OUTPUT);
-  while (!Serial);
-  
-  enable_WiFi();
-  connect_WiFi();
-
-  server.begin();
-  printWifiStatus();
-
-}
-
-void loop() {
-  client = server.available();
-
-  if (client) {
-    printWEB();
-  }
-}
 
 void printWifiStatus() {
   // print the SSID of the network you're attached to:
@@ -136,5 +114,26 @@ void printWEB() {
     // close the connection:
     client.stop();
     Serial.println("client disconnected");
+  }
+}
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
+  while (!Serial);
+  
+  enable_WiFi();
+  connect_WiFi();
+
+  server.begin();
+  printWifiStatus();
+
+}
+
+void loop() {
+  client = server.available();
+
+  if (client) {
+    printWEB();
   }
 }
