@@ -10,26 +10,6 @@ WiFiClient client = server.available();
 
 int ledPin = 2;
 
-void printWifiStatus() {
-  // print the SSID of the network you're attached to:
-  Serial.print("SSID: ");
-  Serial.println(WiFi.SSID());
-
-  // print your board's IP address:
-  IPAddress ip = WiFi.localIP();
-  Serial.print("IP Address: ");
-  Serial.println(ip);
-
-  // print the received signal strength:
-  long rssi = WiFi.RSSI();
-  Serial.print("signal strength (RSSI):");
-  Serial.print(rssi);
-  Serial.println(" dBm");
-
-  Serial.print("To see this page in action, open a browser to http://");
-  Serial.println(ip);
-}
-
 void enable_WiFi() {
   // check for the WiFi module:
   if (WiFi.status() == WL_NO_MODULE) {
@@ -57,6 +37,26 @@ void connect_WiFi() {
   }
 }
 
+void printWifiStatus() {
+  // print the SSID of the network you're attached to:
+  Serial.print("SSID: ");
+  Serial.println(WiFi.SSID());
+
+  // print your board's IP address:
+  IPAddress ip = WiFi.localIP();
+  Serial.print("IP Address: ");
+  Serial.println(ip);
+
+  // print the received signal strength:
+  long rssi = WiFi.RSSI();
+  Serial.print("signal strength (RSSI):");
+  Serial.print(rssi);
+  Serial.println(" dBm");
+
+  Serial.print("To see this page in action, open a browser to http://");
+  Serial.println(ip);
+}
+
 void printWEB() {
 
   if (client) {                             // if you get a client,
@@ -81,13 +81,11 @@ void printWEB() {
             //create the buttons
             client.print("Click <a href=\"/H\">here</a> turn the LED on<br>");
             client.print("Click <a href=\"/L\">here</a> turn the LED off<br><br>");
-            
+
             int randomReading = analogRead(A1);
             client.print("Random reading from analog pin: ");
             client.print(randomReading);
-           
-            
-            
+
 
             // The HTTP response ends with another blank line:
             client.println();
